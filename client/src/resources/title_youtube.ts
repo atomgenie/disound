@@ -1,6 +1,7 @@
 import ytsearch from "ytsr"
 import { getBasicInfo } from "ytdl-core"
 import { chunk } from "lodash"
+import ytplaylist from "ytpl"
 
 interface TitleInfo {
   title: string
@@ -43,14 +44,27 @@ export class TitleYoutubeResource {
     return allTitles
   }
 
-  public async getUrl(title: string): Promise<string | undefined> {
+  public async getUrls(title: string): Promise<readonly string[] | undefined> {
+    // Is basic url.
     if (/^https:\/\/www\.youtube\.com\/watch\?v=[a-zA-Z0-9-]+$/.test(title)) {
-      return title
+      return [title]
+    }
+
+    // Is playlist.
+    if (/^https:\/\/www\.youtube\.com\/playlist\?list=[a-zA-Z0-9-]+$/.test(title)) {
+      try {
+        const playlist = await ytplaylist(title)
+        return playlist.items.map(item => item.url)
+      } catch (e) {
+        console.log(`ytplaylist - error - ${title}`, e)
+        return undefined
+      }
     }
 
     const query = await ytsearch(title, { limit: 1 })
     const [firstResult] = query.items
 
-    return (firstResult as any)?.url
+    const url: string | undefined = (firstResult as any)?.url
+    return url ? [url] : undefined
   }
 }

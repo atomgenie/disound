@@ -56,13 +56,13 @@ export class PlayerInstanceResource {
   }
 
   public async play(message: Message, title: string) {
-    const url = await this.dependencies.title.getUrl(title)
+    const url = await this.dependencies.title.getUrls(title)
 
     if (!url) {
       return
     }
 
-    this.queue.push(url)
+    this.queue.push(...url)
 
     if (this.playing) {
       await message.react("👍")
@@ -124,7 +124,9 @@ export class PlayerInstanceResource {
     }
 
     const messageEmbed = new MessageEmbed()
-    const resolvedTitles = await this.dependencies.title.getTitles(this.queue)
+    const firstQueues = this.queue.slice(0, 5)
+    const resolvedTitles = await this.dependencies.title.getTitles(firstQueues)
+    console.log("Title", resolvedTitles)
 
     const nowPlayingTitle = await this.dependencies.title.getTitle(this.nowPlaying)
 
