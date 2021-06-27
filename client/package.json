@@ -1,0 +1,25 @@
+{
+  "name": "disound",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Tran Tâm-Tanguy <thanh-tam-tangu.tran@epita.fr>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^15.12.4",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  },
+  "dependencies": {
+    "@discordjs/opus": "^0.5.3",
+    "@types/lodash": "^4.14.170",
+    "discord.js": "^12.5.3",
+    "ffmpeg-static": "^4.4.0",
+    "lodash": "^4.17.21",
+    "rxjs": "^7.1.0",
+    "ytdl-core": "^4.8.3",
+    "ytsr": "^3.5.0"
+  },
+  "scripts": {
+    "dev": "NODE_PATH=./src ts-node ./src/index.ts"
+  }
+}
