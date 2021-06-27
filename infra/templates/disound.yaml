@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: disound
+  labels:
+    name: disound
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: disound
+  template:
+    metadata:
+      labels:
+        name: disound
+    spec:
+      containers:
+        - name: disound
+          image: ghcr.io/atomgenie/disound
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1000m"
+          env:
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: discord-token
+                  key: value

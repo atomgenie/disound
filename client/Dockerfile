@@ -9,4 +9,6 @@ RUN yarn tsc -b .
 
 ENV NODE_PATH=./build
 
+LABEL org.opencontainers.image.source https://github.com/atomgenie/disound
+
 CMD ["node", "./build"]
