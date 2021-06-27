@@ -126,7 +126,6 @@ export class PlayerInstanceResource {
     const messageEmbed = new MessageEmbed()
     const firstQueues = this.queue.slice(0, 5)
     const resolvedTitles = await this.dependencies.title.getTitles(firstQueues)
-    console.log("Title", resolvedTitles)
 
     const nowPlayingTitle = await this.dependencies.title.getTitle(this.nowPlaying)
 
