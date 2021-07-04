@@ -9,7 +9,7 @@ const start = async () => {
     token = process.env.DEV_TOKEN
     isDev = true
   } else {
-    const token = process.env.TOKEN
+    token = process.env.TOKEN
   }
 
   if (!token) {
