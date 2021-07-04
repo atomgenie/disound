@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: disound
-          image: ghcr.io/atomgenie/disound:0.1
+          image: ghcr.io/atomgenie/disound:0.11
           resources:
             requests:
               memory: "512Mi"
