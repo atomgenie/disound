@@ -9,6 +9,7 @@ export interface BaseDependencies {
 
 export interface MessageDependencies extends BaseDependencies {
   player: PlayerResource
+  isDev: boolean
 }
 
 export interface PlayerDependencies extends BaseDependencies {}

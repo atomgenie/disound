@@ -49,4 +49,19 @@ export class PlayerResource {
     const player = this.getPlayer(message)
     await player?.stop()
   }
+
+  public async resume(message: Message) {
+    const player = this.getPlayer(message)
+    await player?.resume()
+  }
+
+  public async pause(message: Message) {
+    const player = this.getPlayer(message)
+    await player?.pause()
+  }
+
+  public async loop(payload: string, message: Message) {
+    const player = this.getPlayer(message)
+    await player?.loop(payload, message)
+  }
 }

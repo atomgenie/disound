@@ -1,13 +1,19 @@
 import { Message } from "discord.js"
 import { MessageDependencies } from "./dependencies"
 
-const commandMatch = /^!!(.*)$/
-
 export class MessageResource {
-  constructor(private dependencies: MessageDependencies) {}
+  private commandMatch: RegExp
+
+  constructor(private dependencies: MessageDependencies) {
+    if (dependencies.isDev) {
+      this.commandMatch = /^!!!(.*)$/
+    } else {
+      this.commandMatch = /^!!(.*)$/
+    }
+  }
 
   async handleMessage(message: Message) {
-    const results = commandMatch.exec(message.content)
+    const results = this.commandMatch.exec(message.content)
 
     if (!results) {
       return
@@ -20,7 +26,7 @@ export class MessageResource {
       user: message.author.id,
     })
 
-    const play = /^play (.*)$/.exec(payload)
+    const play = /^play (.+)$/.exec(payload)
 
     if (play) {
       await this.dependencies.player.play(message, play[1])
@@ -40,6 +46,21 @@ export class MessageResource {
     if (payload === "stop") {
       await this.dependencies.player.stop(message)
       return
+    }
+
+    if (payload === "pause") {
+      await this.dependencies.player.pause(message)
+      return
+    }
+
+    if (payload === "resume") {
+      await this.dependencies.player.resume(message)
+    }
+
+    const loop = /^loop (.+)$/.exec(payload)
+
+    if (loop) {
+      await this.dependencies.player.loop(loop[1], message)
     }
   }
 }

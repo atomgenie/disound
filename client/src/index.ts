@@ -2,7 +2,15 @@ import { DiscordResource } from "resources/discord"
 import { DisoundError } from "resources/error"
 
 const start = async () => {
-  const token = process.env.TOKEN
+  let token
+  let isDev = false
+
+  if (process.env.NODE_ENV === "dev") {
+    token = process.env.DEV_TOKEN
+    isDev = true
+  } else {
+    const token = process.env.TOKEN
+  }
 
   if (!token) {
     throw new DisoundError({
@@ -11,7 +19,7 @@ const start = async () => {
     })
   }
 
-  const client = new DiscordResource(token)
+  const client = new DiscordResource(token, { isDev })
   await client.start()
 }
 
